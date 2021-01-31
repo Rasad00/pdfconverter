@@ -1,0 +1,412 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+$mainColor: #65dfc9;
+$secondColor: #6cdbeb;
+$textColor: #426696;
+
+@mixin glassBackgroundGradient($fopacity: 0.7, $sopacity: 0.3) {
+    background: linear-gradient(to top right, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    height: 100vh;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    background: linear-gradient(to right top, $mainColor, $secondColor);
+}
+
+#modal {
+    .overlay {
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+}
+
+.convertmodal {
+    top: 50%;
+    left: 50%;
+    width: 40%;
+    height: 40%;
+    min-height: 200px;
+    min-width: 300px;
+    position: fixed;
+    background-color: white;
+    transform: translate(-50%, -50%);
+    border-radius: 1rem;
+    z-index: 1050;
+    backdrop-filter: blur(1rem);
+    border-radius: 1.6rem;
+    @include glassBackgroundGradient();
+
+    .inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        place-items: center;
+        place-content: center;
+
+        & > * {
+            margin: 10px 0;
+        }
+
+        .convert-message {
+            width: 60%;
+            max-width: 240px;
+            min-width: 150px;
+            display: flex;
+            position: relative;
+
+            h2 {
+                color: $textColor;
+                font-family: "Roboto", sans-serif;
+                text-align: center;
+                flex: 5;
+            }
+
+            .wrapper {
+                position: relative;
+                display: flex;
+                place-items: center;
+                place-content: center;
+
+                flex: 1;
+
+                .loader {
+                    display: flex;
+                    place-content: center;
+                    place-items: center;
+
+                    & > span {
+                        animation: arrows 1s 0s infinite ease-in;
+                        @for $i from 1 to 10 {
+                            &:nth-child(#{$i}){
+                                animation-delay: #{ $i / 10 }s;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+
+        .close {
+            position: absolute;
+            top: 2px;
+            right: 14px;
+            cursor: pointer;
+
+            & > * {
+                font-size: 25px;
+            }
+        }
+
+        .progress {
+            background: #d8d8d8;
+            border-radius: 20px;
+            height: 20px;
+            max-width: 300px;
+            min-width: 150px;
+            width: 50%;
+
+            &-done {
+                width: 0;
+                border-radius: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+                color: $textColor;
+                font-size: 16px;
+                font-family: "Roboto", sans-serif;
+                font-weight: bold;
+                background: linear-gradient(to left, $mainColor, $secondColor);
+                box-shadow: 0 3px 3px -5px $mainColor, 0 2px 5px $secondColor;
+            }
+        }
+
+        & > a {
+            width: 40%;
+            min-width: 200px !important;
+            height: 100px;
+            min-height: 60px;
+            outline: none;
+            border-radius: 1rem;
+            cursor: pointer;
+            border: none;
+            color: $textColor;
+            font-family: "Roboto", sans-serif;
+            font-size: 1.4rem;
+            font-weight: bolder;
+            display: flex;
+            place-items: center;
+            place-content: center;
+            text-decoration: none;
+            user-select: none;
+            background: linear-gradient(to right top, $mainColor, $secondColor);
+
+            &:hover {
+                transform: perspective(500px) translate3d(0, -2px, 20px);
+            }
+        }
+    }
+}
+
+.converter {
+    min-width: 520px;
+    width: 60%;
+    height: 55%;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(2rem);
+    border-radius: 1.6rem;
+    @include glassBackgroundGradient();
+
+    .uploader {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        place-content: center;
+        place-items: center;
+
+        .container {
+            width: 90%;
+            height: 100%;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            place-content: center;
+            place-items: center;
+
+            .dropzone {
+                width: 100%;
+                height: 80%;
+                display: flex;
+                border-radius: 10px;
+                outline: none;
+
+                @include glassBackgroundGradient();
+
+                &::-webkit-scrollbar-track {
+                    @include glassBackgroundGradient();
+                }
+
+                &::-webkit-scrollbar {
+                    width: 4px;
+                }
+
+                /* Track */
+                &::-webkit-scrollbar-track {
+                    border-radius: 10px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background: $secondColor;
+                }
+            }
+
+            .dropzoneWaiting {
+                @extend .dropzone;
+                flex-direction: column;
+                place-content: center;
+                place-items: center;
+                cursor: pointer;
+
+                p {
+                    color: $textColor;
+                    font-family: "Roboto", sans-serif;
+                    font-weight: 700;
+                    font-size: 20px;
+                    text-align: center;
+                    margin: 2px;
+                }
+                svg {
+                    z-index: 5;
+                    font-size: 70px;
+                    margin: 2px;
+                }
+            }
+
+            .dropzoneAccepted {
+                @extend .dropzone;
+
+                height: 80%;
+                display: flex;
+                flex-direction: row !important;
+                flex-wrap: wrap !important;
+                align-items: flex-start !important;
+                justify-content: flex-start !important;
+                overflow-x: auto;
+                padding: 10px;
+
+                .docxfile {
+                    // width: 180px;
+                    height: 120px;
+                    position: relative;
+                    display: flex;
+                    place-content: center;
+                    place-items: center;
+                    flex-direction: column;
+                    z-index: 10;
+                    margin: 0 10px;
+                    flex: 0 1 180px;
+
+                    &-data {
+                        width: 60%;
+                        height: 60%;
+                        position: relative;
+
+                        & > img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: contain;
+                        }
+
+                        &--size {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            font-size: 12px;
+                            font-weight: 800;
+                            font-family: "Roboto", sans-serif;
+                            color: $textColor;
+                        }
+
+                        &--delete {
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            z-index: 10;
+                            cursor: pointer;
+
+                            & > svg > * {
+                                font-size: 20px !important ;
+                            }
+                        }
+                    }
+                    &--name {
+                        color: $textColor;
+                        font-weight: 700;
+                        text-align: center;
+                        width: 100%;
+                        margin: 2px;
+                        height: 15px;
+                        font-size: 12px;
+                        overflow: hidden;
+                        text-align: center;
+                        text-overflow: clip;
+                        font-family: "Roboto", sans-serif;
+                    }
+                }
+            }
+            .sender {
+                width: 100%;
+                display: flex;
+                justify-self: flex-end;
+                justify-content: flex-end !important;
+                padding: 10px;
+                &-info {
+                    display: flex;
+                    place-content: center;
+                    place-items: center;
+
+                    &--info {
+                        font-size: clamp(0.6rem, 1.2rem);
+                        color: $textColor;
+                        font-weight: 700;
+                        font-family: "Robota", sans-serif;
+                        margin-left: 10px;
+                    }
+                }
+
+                button {
+                    max-height: 60px;
+                    height: 46px;
+                    min-width: 100px;
+                    padding: 15px;
+                    font-size: 15px;
+                    color: $textColor;
+                    font-weight: 700;
+                    font-family: "Robota", sans-serif;
+                    margin-left: 10px;
+                    background: linear-gradient(to right top, $mainColor, $secondColor);
+                    outline: none;
+                    border: none;
+                    border-radius: 10px;
+                    text-transform: uppercase;
+                    cursor: pointer;
+
+                    &:hover {
+                        transform: perspective(900px) translate3d(0, -1px, 40px) rotateX(3deg);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.circle1,
+.circle2 {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    max-width: 18rem;
+    max-height: 18rem;
+    min-width: 5rem;
+    min-height: 5rem;
+    border-radius: 10rem;
+    background-color: white;
+    @include glassBackgroundGradient(0.8);
+}
+
+.circle1 {
+    top: 15%;
+    right: 15%;
+}
+
+.circle2 {
+    bottom: 15%;
+    left: 15%;
+}
+
+.poweredby {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+    color: whitesmoke;
+    font-size: "Roboto", sans-serif;
+    font-weight: 900;
+    padding: 2px 10px;
+    user-select: none;
+}
+
+
+@keyframes arrows {
+    0%,
+    100% {
+      color: darken($color: $secondColor, $amount: 30);
+      transform: translateY(-5px);
+    }
+    50% {
+      color: $textColor;
+      transform: translateY(5px);
+    }
+  }
