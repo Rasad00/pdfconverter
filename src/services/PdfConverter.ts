@@ -7,13 +7,10 @@ interface IToPDF {
 }
 
 export default class PDFConverterServices {
-    static toPDF = async (data: IFile[]) => {
-        return await axios.post<IToPDF>("api/topdf" , data, {
-            baseURL: "http://localhost:5000/",
-            headers: {
-                "Content-Type": "application/json",
-                
-            }
-        });
-    }
+    static toPDF = async (data: IFile[]) => await axios.post<IToPDF>("api/topdf", data, {
+        baseURL: "http://localhost:5000/",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
 }

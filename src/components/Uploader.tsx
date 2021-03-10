@@ -5,7 +5,7 @@ import { useDropzone } from 'react-dropzone';
 import { IconContext } from "react-icons/lib";
 
 import { IFile, IHasZIP } from "interfaces";
-import { SharedFileContext } from "contexts/SharedFiles";
+import { SharedFileContext, add_files } from "contexts/SharedFiles";
 import DocxFile from "./DocxFile";
 import { ConvertProgressModal } from "components";
 import PDFConverterServices from "services/PdfConverter";
@@ -34,7 +34,7 @@ const Uploader: React.FC = () => {
         });
 
         setTimeout(() => {
-            dispatch({ type: "ADD_FILES", payload: { files: newFiles } });
+            dispatch(add_files(newFiles))
         }, 500);
     }, [])
 

@@ -4,14 +4,14 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { IconContext } from "react-icons/lib";
 
 import DoxcImage from "images/docx.png";
-import { SharedFileContext } from "contexts/SharedFiles";
+import { SharedFileContext, remove_file } from "contexts/SharedFiles";
 import FileSizeConvert from "util/FileSizeConverter";
 
 const DocxFile: React.FC<{ file: IFile }> = ({ file }) => {
     const { dispatch } = useContext(SharedFileContext);
 
     const handleDeleteFile = () => 
-        dispatch({ type: "REMOVE_FILE", payload: { id: file.id } });
+        dispatch(remove_file(file.id))
     
     return (
         <div className="docxfile">

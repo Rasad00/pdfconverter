@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { SharedFileContext } from "contexts/SharedFiles";
 import { Modal } from "components";
 import { IconContext } from "react-icons/lib";
-import { AiOutlineCloseCircle } from "react-icons/ai";
+import { AiOutlineCloseCircle, AiOutlineCloudDownload } from "react-icons/ai";
 import { io } from "socket.io-client";
 import { IHasZIP } from "interfaces";
 
@@ -85,8 +85,13 @@ const FileConvertProgressModal: React.FC<IFileConvertProgressModal> = ({ open, o
                             </>
                         )
                         : (
-                            <a href={`http://localhost:5000/api/download/${zip_name}`} onClick={handleDownloadPdfFiles}>
-                                Download .zip
+                            <a className="download_button" href={`http://localhost:5000/api/download/${zip_name}`} onClick={handleDownloadPdfFiles}>
+                                <span className="download_button_wrapper">
+                                    <span className="download_button_wrapper--text">Download .zip</span>
+                                    <span className="download_button_wrapper--icon" aria-hidden="true">
+                                        <AiOutlineCloudDownload  aria-hidden="true"/>
+                                    </span>
+                                </span>
                             </a>
                         )
                 }

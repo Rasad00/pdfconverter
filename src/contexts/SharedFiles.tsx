@@ -6,16 +6,23 @@ interface ISharedFileContext {
     dispatch: React.Dispatch<Action>
 }
 
-export type ADD_FILES = "ADD_FILES";
-export type REMOVE_FILE = "REMOVE_FILE";
+const ADD_FILES = "ADD_FILES";
+const REMOVE_FILE = "REMOVE_FILE";
 
+export const add_files = (files: IFile[]): Action => ({
+    type: ADD_FILES,
+    payload: { files }
+});
+
+export const remove_file = (id: number|string): Action  => ({
+    type: REMOVE_FILE,
+    payload: { id }
+})
 
 type Action = 
-    | { type: ADD_FILES,  payload : { files: IFile[] }}
-    | { type: REMOVE_FILE, payload : { id: number|string } } 
+    | { type: typeof ADD_FILES,  payload : { files: IFile[] }}
+    | { type: typeof REMOVE_FILE, payload : { id: number|string } } 
     | { type: "REMOVE_ALL_FILES" };
-
-
 
 export const SharedFileContext = React.createContext<ISharedFileContext>({} as ISharedFileContext);
 
